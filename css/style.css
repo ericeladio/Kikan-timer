@@ -13,7 +13,6 @@ body {
 	font-size: 1.6rem;
 	box-sizing: border-box;
 	height: 100%;
-	border: red solid;
 }
 
 main {
@@ -50,6 +49,7 @@ img{
 
 .kikan-timer {
 	margin: 0 auto;
+	height: 10rem;
 }
 
 .text-section {
@@ -67,7 +67,7 @@ img{
 .content-container {
 	width: 80%;
 	overflow: hidden;
-
+	border: solid 1px green;
 }
 
 .button-container {
@@ -75,7 +75,7 @@ img{
 	justify-content: space-around;
 	align-items: flex-end;
 	height: 25%;
-	border: solid 1px red;
+	max-height: 233px;
 }
 
  .button {
