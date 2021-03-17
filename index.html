@@ -3,34 +3,34 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="./normalize.css">
-	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="stylesheet" type="text/css" href="./css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<link rel="stylesheet" href="./css/all.min.css">
 	<title>Kikan Timer</title>
 </head>
 <body>
 	<header>
-		<img class='headerImage' src="./img/kikan-timer.png">	
-		<img class='headerImage' src="./img/creado_bykondo.png">
+		<img class='header-image' src="./img/kikan-timer.png">	
+		<img class='header-image' src="./img/creado_bykondo.png">
 	</header>
 	<main>
-		<section class="contentContainer">
-			<div class="buttonContainer">
+		<section class="content-container">
+			<div class="button-container">
 				<button class="yellow button">KIKAN</button>
 				<button class="blue button">Descanzo corto</button>
 				<button class="blue button">Descanzo largo</button>
 			</div>
 			<div id="chronometer">25:00</div>
-			<div>
-				<button>icon</button>
-				<button>icon</button>
+			<div class="control-container">
+				<button class="control"><i class="fas fa-play "></i></button>
+				<button class="control"><i class="fas fa-retweet"></i></button>
 			</div>
 		</section>
 		<section id="infoKikan">
-			<img id="kikanTimer" src="./img/tomato.png">
+			<img class="kikan-timer" src="./img/tomato.png">
 
-			<div class="textSection">
-				<h3 class="infoTitle">
+			<div class="text-section">
+				<h3 class="info-title">
 					Qué es la Técnica de Kikan?
 				</h3>
 				<p>
@@ -42,7 +42,7 @@
 				<p>
 					Esta técnica te permitira administrar tu tiempo alternando periodos de trabajo y de descanso. Fuciona asi:
 				</p>
-				<ol class="kikanList">
+				<ol class="kikan-list">
 					<li>
 						Concentrate en tu trabajo o tarea asignada durante <strong>25 min.</strong> (esto es un Kikan)
 					</li>
@@ -57,7 +57,7 @@
 					Inténtalo!
 				</p>
 			</div>
-			<button>icon</button>
+			<button id="show-button"><i class="fas fa-chevron-left"></i></button>
 		</section>
 	</main>
 	
