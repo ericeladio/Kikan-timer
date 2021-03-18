@@ -28,7 +28,8 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	height: 80px;
-    padding: 0 100px;
+    padding: 0 100px;position: relative;
+    position: relative;
     
 }
 img{ 
@@ -37,7 +38,6 @@ img{
  .header-image{
  	height: 40px;
  }
-
 #infoKikan {
 	background: #f1f1f1;
 	color: #000;
@@ -105,7 +105,7 @@ img{
  	text-align: center;
  }
 
- #show-button {
+ .show-button {
  	color: var(--white);
  	background: var(--yellow);
  	border: none;
@@ -115,6 +115,12 @@ img{
  	top:50%;
  	left: calc(100% - 15px)
  }
+ .light-bulb {
+	display: none;
+	top: unset;
+	bottom: -30px;
+	left: calc(50% - 15px);
+}
  .control-container{
  	display: flex;
  	justify-content: center;
@@ -130,12 +136,19 @@ img{
  	font-size: 20px;
  }
  @media (max-width: 768px) {
+ 	header {
+ 		padding: 0 25px;
+
+ 	}
+ 	.light-bulb {
+ 		display: block;
+ 	}
  	#infoKikan {
  		display: none;
  	}
  	.content-container {
  		width: 100%;
- 		height: 100vh;
+ 		height: calc(100vh - 80px);
  	}
 
  }
