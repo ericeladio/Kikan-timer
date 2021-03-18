@@ -85,6 +85,10 @@ img{
  	width: 200px;
  	font-size: 2rem;
  	font-style: bold;
+ 	-webkit-box-shadow: 0px 4px 5px 6px rgba(204,200,204,0.92);
+	-moz-box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
+	box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
+	border-radius: 7px;
  }
 
  .yellow {
@@ -117,9 +121,15 @@ img{
  }
  .light-bulb {
 	display: none;
+	width: 60px;
+ 	height: 50px;
 	top: unset;
-	bottom: -30px;
-	left: calc(50% - 15px);
+	bottom: -50px;
+	left: calc(50% - 30px);
+	-webkit-box-shadow: 0px 4px 5px 6px rgba(204,200,204,0.92);
+	-moz-box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
+	box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
+	border-radius: 3px;
 }
  .control-container{
  	display: flex;
