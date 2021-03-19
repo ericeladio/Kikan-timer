@@ -32,7 +32,6 @@ main {
 	min-height: calc(100vh - 80px);
 }
 
-
 header {
 	background-color: var(--blue);
 	display: flex;
@@ -43,13 +42,14 @@ header {
     position: relative;
     
 }
+
 img { 
 	display: block;
- }
+}
 
- .header-image {
+.header-image {
  	height: 40px;
- }
+}
 
 #infoKikan {
 	background: var(--gray);
@@ -81,6 +81,7 @@ img {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	height: calc(100vh - 80px);
 }
 
 .button-container {
@@ -90,7 +91,7 @@ img {
 	align-items: flex-end;
 }
 
-.show-mobile-buttons {
+.button-container i {
 	display: none;
 }
 
@@ -131,6 +132,7 @@ img {
  	top:50%;
  	left: calc(100% - 15px)
  }
+
  .light-bulb {
 	display: none;
 	width: 60px;
@@ -143,13 +145,14 @@ img {
 	box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
 	border-radius: 3px;
 }
- .control-container{
+
+.control-container{
  	display: flex;
  	flex: 3 1;
  	justify-content: center;
- }
+}
 
- .control {
+.control {
  	width: 60px;
  	height: 60px;
  	margin: 15px;
@@ -157,8 +160,24 @@ img {
  	border: var(--blue) solid 2px;
  	background-color: var(--white);
  	font-size: 20px;
- }
- @media (max-width: 768px) {
+}
+
+@media (min-width: 1400px) {
+	.text-section {
+		font-size: 2rem;
+		font-weight: 500;
+	}
+	.text-section strong {
+		font-weight: 800;
+
+	}
+	.info-title {
+		width: 100%;
+	}
+
+  }
+
+@media (max-width: 1000px) {
  	header {
  		padding: 0 25px;
 
@@ -174,9 +193,14 @@ img {
  		height: calc(100vh - 80px);
  	}
 
- }
+}
 
-@media(max-width:500px) {
+@media(max-width:670px) {
+
+	body {
+		min-width: 360px;
+	}
+
 	header {
 		justify-content: center;
 		background-color: var(--primary-color);
@@ -203,51 +227,39 @@ img {
 	.content-container {
 		background-color: var(--primary-color);
 		color: var(--white);
-		background-image: url(../img/creado_bykondo.png);
+		background-image: url(../img/creado_bykondo.svg);
 		background-size: 259px;
 		background-position: bottom center;
 		background-repeat: no-repeat;
 		border: none;
 	}
 
-	.show-mobile-buttons {
-		display: flex;
+	.button-container {
 		justify-content: center;
-		align-items: center;
-		font-size: 2rem;
+	}
+
+	.buttton-container i,
+	.button-container button {
+		margin: 0 3rem;
+	}
+
+	.button-container i {
+		display: block;
 		color: var(--secondary-color);
 	}
 
-	.show-mobile-buttons span {
-		font-size: 3rem;
-		background-color: var(--secondary-color);
-		color: var(--white);
-		padding: 1rem 2rem;
-		margin: 0 2rem;
-		border-radius: 7px;
+	.show-mobile-button {
+		display: block;
+		
 	}
 
 	.control {
+		font-size: 25px;
 		width: 90px;
 		height: 90px;
 		margin: 30px;
-		border-radius: 50%;
-		color: var(--white);
-		background: transparent;
+		color: var(--primary-color);
+		background: var(--white);
 		border: solid white;
 	}
 }
-@media (min-width: 1184px) {
-	.text-section {
-		font-size: 2rem;
-		font-weight: 500;
-	}
-	.text-section strong {
-		font-weight: 800;
-
-	}
-	.info-title {
-		width: 100%;
-	}
-
-  }
