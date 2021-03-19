@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap');
+
 :root {
-	--blue: #014283;
+	--blue: #004283;
 	--yellow: #FFA400;
-	--white: #ffffff;
+	--white: #F5F5F5;
+	--gray: #F1F1F1;
+
 }
 
 body, html {
@@ -10,6 +14,7 @@ body, html {
 }
 
 body {
+	font-family: 'Raleway', sans-serif;
 	font-size: 1.6rem;
 	box-sizing: border-box;
 	height: 100%;
@@ -24,8 +29,6 @@ body.break-time {
 
 main {
 	display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
 }
 
 
@@ -39,17 +42,19 @@ header {
     position: relative;
     
 }
-img{ 
+img { 
 	display: block;
  }
- .header-image{
+
+ .header-image {
  	height: 40px;
  }
+
 #infoKikan {
-	background: #f1f1f1;
+	background: var(--gray);
 	color: #000;
-	padding: 4rem 6rem;
-	width: 20%; 
+	padding: 4rem 4rem;
+	flex: 2;
 	height: 100%;
 	position:relative;
 }
@@ -63,7 +68,7 @@ img{
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	padding-left: 30px;
+	font-size: 1.3rem;
 }
 
 .info-title {
@@ -72,16 +77,18 @@ img{
 	font-size: 2.1rem;
 }
 .content-container {
-	width: 80%;
+	flex: 8;
+	display: flex;
+	flex-direction: column;
 	overflow: hidden;
 }
 
 .button-container {
 	display: flex;
+	flex: 3;
 	justify-content: space-around;
 	align-items: flex-end;
-	height: 25%;
-	max-height: 233px;
+	border: solid 1px red;
 }
 
 .show-mobile-buttons {
@@ -95,10 +102,6 @@ img{
  	width: 200px;
  	font-size: 2rem;
  	font-style: bold;
- 	-webkit-box-shadow: 0px 4px 5px 6px rgba(204,200,204,0.92);
-	-moz-box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
-	box-shadow: 1px 3px 3px 3px rgb(204 200 204 / 92%);
-	border-radius: 7px;
  }
 
  .yellow {
@@ -115,8 +118,9 @@ img{
 
  #chronometer {
  	font-size: 14rem;
- 	width: 100%;
+ 	flex: 3;
  	text-align: center;
+ 	border: solid 1px green;
  }
 
  .show-button {
@@ -143,7 +147,9 @@ img{
 }
  .control-container{
  	display: flex;
+ 	flex: 3;
  	justify-content: center;
+ 	border: solid 1px blue;
  }
 
  .control {
@@ -167,7 +173,7 @@ img{
  		display: none;
  	}
  	.content-container {
- 		width: 100%;
+ 		flex: 1;
  		height: calc(100vh - 80px);
  	}
 
@@ -198,7 +204,6 @@ img{
 	}
 
 	.content-container {
-		width: 100%;
 		background-color: var(--primary-color);
 		color: var(--white);
 		background-image: url(../img/creado_bykondo.png);
@@ -212,7 +217,6 @@ img{
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 100%;
 		font-size: 2rem;
 		color: var(--secondary-color);
 	}
