@@ -29,6 +29,7 @@ body.break-time {
 
 main {
 	display: flex;
+	height: calc(100vh - 80px);
 }
 
 
@@ -85,7 +86,7 @@ img {
 
 .button-container {
 	display: flex;
-	flex: 3;
+	flex: 3 1;
 	justify-content: space-around;
 	align-items: flex-end;
 	border: solid 1px red;
@@ -118,7 +119,7 @@ img {
 
  #chronometer {
  	font-size: 14rem;
- 	flex: 3;
+ 	flex: 3 1;
  	text-align: center;
  	border: solid 1px green;
  }
@@ -147,7 +148,7 @@ img {
 }
  .control-container{
  	display: flex;
- 	flex: 3;
+ 	flex: 3 1;
  	justify-content: center;
  	border: solid 1px blue;
  }
