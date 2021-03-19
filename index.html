@@ -10,13 +10,20 @@
 </head>
 <body>
 	<header>
+		<!-- you missed images size and alt propery -->
+		<!-- why and when should i use png rather than jpeg, gif (study) -->
 		<img class='header-image' src="./img/kikan-timer.png">	
-		<img class='header-image' src="./img/creado_bykondo.png">
+		<img class='header-image kondo-logo' src="./img/creado_bykondo.png">
 		<button class="show-button light-bulb"><i class="fas fa-lightbulb"></i></button>
 	</header>
 	<main>
 		<section class="content-container">
 			<div class="button-container">
+				<div class="show-mobile-buttons">
+					<i class="fas fa-caret-left fa-4x"></i>
+					<span id="mobile-state">KIKAN</span>
+					<i class="fas fa-caret-right fa-4x"></i>
+				</div>
 				<button class="yellow button">KIKAN</button>
 				<button class="blue button">Descanzo corto</button>
 				<button class="blue button">Descanzo largo</button>
@@ -29,17 +36,10 @@
 		</section>
 		<section id="infoKikan">
 			<img class="kikan-timer" src="./img/tomato.png">
-
 			<div class="text-section">
-				<h3 class="info-title">
-					Qué es la Técnica de Kikan?
-				</h3>
-				<p>
-					Uno de los grandes errores de todo programador es castigar su cuerpo y su mente con el exceso de trabajo. Por eso, los desarrolladores Hipatia usamos varios métodos para administrar mejor nuestros tiempo. 
-				</p>
-				<p>
-					Uno de ellos es la <strong>Técnica Kikan:</strong>
-				</p>
+				<h3 class="info-title">Qué es la Técnica de Kikan?</h3>
+					<p>Uno de los grandes errores de todo programador es castigar su cuerpo y su mente con el exceso de trabajo. Por eso, los desarrolladores Hipatia usamos varios métodos para administrar mejor nuestros tiempo. </p>
+				<p>Uno de ellos es la <strong>Técnica Kikan:</strong></p>
 				<p>
 					Esta técnica te permitira administrar tu tiempo alternando periodos de trabajo y de descanso. Fuciona asi:
 				</p>
@@ -61,6 +61,5 @@
 			<button class="show-button"><i class="fas fa-chevron-left"></i></button>
 		</section>
 	</main>
-	
 </body>
 </html>

@@ -13,6 +13,13 @@ body {
 	font-size: 1.6rem;
 	box-sizing: border-box;
 	height: 100%;
+	--primary-color: #005991;
+	--secondary-color: #FFAB36;
+}
+
+body.break-time {
+	--primary-color: #FFAB36;
+	--secondary-color: #005991;
 }
 
 main {
@@ -67,7 +74,6 @@ img{
 .content-container {
 	width: 80%;
 	overflow: hidden;
-	border: solid 1px green;
 }
 
 .button-container {
@@ -78,7 +84,11 @@ img{
 	max-height: 233px;
 }
 
- .button {
+.show-mobile-buttons {
+	display: none;
+}
+
+.button {
  	border: none;
  	color: var(--white); 
  	padding: 2rem 0;
@@ -162,3 +172,67 @@ img{
  	}
 
  }
+
+@media(max-width:500px) {
+	header {
+		justify-content: center;
+		background-color: var(--primary-color);
+	}
+
+	.kondo-logo {
+		display: none;
+	}
+
+	.light-bulb {
+		display: block;
+		background-color: var(--secondary-color);
+		box-shadow: none;
+	}
+
+	.button {
+		display: none;
+	}
+
+	main {
+		justify-content: center;
+	}
+
+	.content-container {
+		width: 100%;
+		background-color: var(--primary-color);
+		color: var(--white);
+		background-image: url(../img/creado_bykondo.png);
+		background-size: 259px;
+		background-position: bottom center;
+		background-repeat: no-repeat;
+		border: none;
+	}
+
+	.show-mobile-buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		font-size: 2rem;
+		color: var(--secondary-color);
+	}
+
+	.show-mobile-buttons span {
+		font-size: 3rem;
+		background-color: var(--secondary-color);
+		color: var(--white);
+		padding: 1rem 2rem;
+		margin: 0 2rem;
+		border-radius: 7px;
+	}
+
+	.control {
+		width: 90px;
+		height: 90px;
+		margin: 30px;
+		border-radius: 50%;
+		color: var(--white);
+		background: transparent;
+		border: solid white;
+	}
+}
