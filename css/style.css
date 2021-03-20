@@ -19,11 +19,11 @@ body {
 	box-sizing: border-box;
 	height: 100%;
 	--primary-color: #005991;
-	--secondary-color: #FFAB36;
+	--secondary-color: var(--yellow);
 }
 
 body.break-time {
-	--primary-color: #FFAB36;
+	--primary-color: var(--yellow);
 	--secondary-color: #005991;
 }
 
@@ -250,7 +250,7 @@ img {
 
 	.show-mobile-button {
 		display: block;
-		
+		background-color: var(--secondary-color);
 	}
 
 	.control {
