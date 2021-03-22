@@ -35,17 +35,18 @@
 		<section class="content-container">
 			<div class="button-container">
 				<i class="fas fa-caret-left fa-4x"></i>
-				<button class="yellow button show-mobile-button">KIKAN</button>
-				<button class="blue button">Descanzo corto</button>
-				<button class="blue button">Descanzo largo</button>
+				<button id="kikanBtn" onclick="onKikanChange()" class="blue button show-mobile-button">KIKAN</button>
+				<button id='shortBreakBtn' onclick="onShortBreakChange()" class="blue button">Descanzo corto</button>
+				<button id='longBreakBtn' onclick="onLongBreakChange()" class="blue button">Descanzo largo</button>
 				<i class="fas fa-caret-right fa-4x"></i>
 			</div>
-			<div id="chronometer">25:00</div>
+			<div id="chronometer">00:00</div>
 			<div class="control-container">
-				<button class="control"><i class="fas fa-play "></i></button>
-				<button class="control"><i class="fas fa-retweet"></i></button>
+				<button id='playPause' class="control"><i class="fas fa-play"></i></button>
+				<button id="reset" class="control"><i class="fas fa-retweet"></i></button>
 			</div>
 		</section>
 	</main>
+	<script type="text/javascript" src='./js/index.js'></script>
 </body>
 </html>
