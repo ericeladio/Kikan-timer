@@ -36,6 +36,7 @@ function onShortBreakChange () {
   timerSelected = 'shortBreak'
   shortBreakButton.classList.remove('blue')
   shortBreakButton.classList.add('yellow')
+  playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 function onLongBreakChange () {
   currentTimer = initialLongBreakTimer
@@ -51,6 +52,7 @@ function onLongBreakChange () {
   timerSelected = 'longBreak'
   longBreakButton.classList.remove('blue')
   longBreakButton.classList.add('yellow')
+  playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 
 function onKikanChange() {
@@ -67,6 +69,41 @@ function onKikanChange() {
   timerSelected = 'kikan'
   kikanButton.classList.remove('blue')
   kikanButton.classList.add('yellow')
+  playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
+}
+
+function kikanAlert () {
+  if (onShortBreak || onLongBreak) {
+    var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
+    if (accept) {
+      onReset()
+    } else {
+      return null
+    }
+  }
+  onKikanChange()
+}
+function shortBreakAlert () {
+    if (onKikan|| onLongBreak) {
+    var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
+    if (accept) {
+      onReset()
+    }else {
+      return null
+    }
+  }
+  onShortBreakChange()
+}
+function longBreakAlert () {
+    if (onKikan|| onShortBreak) {
+    var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
+    if (accept) {
+      onReset()
+    }else {
+      return null
+    }
+  }
+  onLongBreakChange()
 }
 
 function startTimer (time, type) {
@@ -120,18 +157,18 @@ function startTimer (time, type) {
       if (onKikan) {
         kikanCounter = kikanCounter + 1
         if ((kikanCounter % 4) === 0) {
-           return startTimer(initialLongBreakTimer, 'longBreak')
+           return onLongBreakChange()
         } else {
-          return startTimer(initialShortBreakTimer, 'shortBreak')
+          return onShortBreakChange()
         }
       }
       if (onShortBreak) {
         shortBreakKiKanCounter = shortBreakKiKanCounter + 1
-        return startTimer(initialKikanTimer, 'kikan')
+        return onKikanChange()
       }
       if (onLongBreak) {
         longBreakKikanCounter = longBreakKikanCounter + 1
-        return startTimer(initialKikanTimer, 'kikan')
+        return onKikanChange()
       }
     }
   }, 1000)
@@ -152,14 +189,14 @@ function pauseTimer () {
   }
 }
 
-function onReset() {
-  if (onKikan) {
+function onReset () {
+  if (timerSelected === 'kikan') {
     onKikanChange()
   }
-  if (onShortBreak) {
+  if (timerSelected === 'shortBreak') {
     onShortBreakChange()
   }
-  if (onLongBreak) {
+  if (timerSelected === 'longBreak') {
     onLongBreakChange()
   }
   pauseTimer()
