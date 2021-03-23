@@ -16,7 +16,7 @@
 		<button class="show-button light-bulb"><i class="fas fa-lightbulb"></i></button>
 	</header>
 	<main>
-		<aside id="infoKikan">
+		<aside id="infoKikan" class="transition">
 			<img class="kikan-timer" src="./img/tomato.svg" alt="tomato clock" width="97.55px">
 			<article class="text-section">
 				<h3 class="info-title">¿Qué es la Técnica de Kikan?</h3>
@@ -34,11 +34,11 @@
 		</aside>
 		<section class="content-container">
 			<div class="button-container">
-				<i class="fas fa-caret-left fa-4x"></i>
+				<i onclick="onLeftChange()" class="fas fa-caret-left fa-4x"></i>
 				<button id="kikanBtn" onclick="kikanAlert()" class="blue button show-mobile-button">KIKAN</button>
 				<button id='shortBreakBtn' onclick="shortBreakAlert()" class="blue button">Descanzo corto</button>
 				<button id='longBreakBtn' onclick="longBreakAlert()" class="blue button">Descanzo largo</button>
-				<i class="fas fa-caret-right fa-4x"></i>
+				<i onclick="onRightChange()" class="fas fa-caret-right fa-4x"></i>
 			</div>
 			<div id="chronometer">00:00</div>
 			<div class="control-container">

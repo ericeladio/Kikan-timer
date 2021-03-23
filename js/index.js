@@ -10,6 +10,7 @@ var kikanCounter = 0
 var shortBreakKiKanCounter = 0
 var longBreakKikanCounter = 0
 var timerSelected = 'kikan'
+var widthScreen = document.documentElement.clientWidth
 
 // ELEMENTS START
 const kikanButton = document.getElementById('kikanBtn')
@@ -39,6 +40,7 @@ function onShortBreakChange () {
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 function onLongBreakChange () {
+  console.log(initialLongBreakTimer)
   currentTimer = initialLongBreakTimer
   chronometer.innerText = currentTimer
   if (timerSelected === 'kikan') {
@@ -72,7 +74,7 @@ function onKikanChange() {
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 
-function kikanAlert () {
+function kikanAlert (callback) {
   if (onShortBreak || onLongBreak) {
     var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
     if (accept) {
@@ -81,9 +83,10 @@ function kikanAlert () {
       return null
     }
   }
+  if (callback) callback()
   onKikanChange()
 }
-function shortBreakAlert () {
+function shortBreakAlert (callback) {
     if (onKikan|| onLongBreak) {
     var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
     if (accept) {
@@ -92,17 +95,19 @@ function shortBreakAlert () {
       return null
     }
   }
+  if (callback) callback()
   onShortBreakChange()
 }
-function longBreakAlert () {
-    if (onKikan|| onShortBreak) {
-    var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
+function longBreakAlert (callback) {
+  if (onKikan || onShortBreak) {
+    var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
     if (accept) {
       onReset()
-    }else {
+    } else {
       return null
     }
   }
+  if (callback) callback()
   onLongBreakChange()
 }
 
@@ -217,6 +222,49 @@ playPauseButton.addEventListener('click', function () {
 resetButton.addEventListener('click', function () {
   onReset()
 })
+
+function changeButton (removeElement, addElement, className) {
+  removeElement.classList.remove(className)
+  addElement.classList.add(className)
+}
+
+
+function onLeftChange () {
+  if (timerSelected === 'kikan') {
+    return longBreakAlert(function () {
+      changeButton(kikanButton, longBreakButton, 'show-mobile-button')
+    })
+  }
+  if (timerSelected === 'shortBreak') {
+    return kikanAlert(function () {
+      changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
+    })
+  }
+  if (timerSelected === 'longBreak') {
+    return shortBreakAlert(function () {
+      changeButton(longBreakButton, shortBreakButton, 'show-mobile-button')
+    })
+  }
+}
+
+function onRightChange () {
+  if (timerSelected === 'kikan') {
+    return shortBreakAlert(function () {
+      changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
+    })
+  }
+  if (timerSelected === 'shortBreak') {
+    return longBreakAlert(function () {
+      changeButton(shortBreakButton, longBreakButton, 'show-mobile-button')
+    })
+  }
+  if (timerSelected === 'longBreak') {
+    return kikanAlert(function () {
+      changeButton(longBreakButton, kikanButton, 'show-mobile-button')
+    })
+  }
+}
+
 
 window.onload = function () {
   // this code works to set the initial active button based on the timerSelected variable
