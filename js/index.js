@@ -23,6 +23,7 @@ const aside = document.getElementById('infoKikan')
 const arrowButton = aside.children[2]
 const arrowMobile = document.getElementById('mobile')
 const body = document.getElementById('c-body')
+const logo = document.getElementById('logo-kikan')
 
 // ELEMENTS END
 
@@ -94,6 +95,7 @@ function kikanAlert (callback) {
   if (callback) {
     callback()
     body.classList.remove('break-time')
+    logo.src = './img/kikan-timer.svg'
   }
   onKikanChange()
 }
@@ -109,6 +111,7 @@ function shortBreakAlert (callback) {
   if (callback) {
     callback()
     body.classList.add('break-time')
+    logo.src = './img/kikan_logo_blue.svg'
   }
   onShortBreakChange()
 }
@@ -124,6 +127,7 @@ function longBreakAlert (callback) {
   if (callback) {
     callback()
     body.classList.add('break-time')
+    logo.src = './img/kikan_logo_blue.svg'
   }
   onLongBreakChange()
 }
