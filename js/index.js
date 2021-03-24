@@ -9,7 +9,7 @@ var intervalTimer = null
 var kikanCounter = 0
 var shortBreakKiKanCounter = 0
 var longBreakKikanCounter = 0
-var timerSelected = 'kikan'
+var timerSelected = 'kikan' // kikan | longbrake | shortBrake 
 var widthScreen = document.documentElement.clientWidth
 
 // ELEMENTS START
@@ -19,6 +19,8 @@ const longBreakButton = document.getElementById('longBreakBtn')
 const chronometer = document.getElementById('chronometer')
 const playPauseButton = document.getElementById('playPause')
 const resetButton = document.getElementById('reset')
+const aside = document.getElementById('infoKikan')
+const arrowButton = aside.children[2]
 // ELEMENTS END
 
 // this function change the currentTimer of the kikan based on the timerSelected
@@ -127,7 +129,7 @@ function startTimer (time, type) {
     onKikan = false
     onShortBreak = false
   }
-  const minutosSegundos = time.split(':')
+  const minutosSegundos = time.split(':')  // hacer un objeto que regrese minutos y horas ( @cyberpolin )
   var minutos = parseInt(minutosSegundos[0])
   var displayMinutos = null
   var segundos = parseInt(minutosSegundos[1])
@@ -265,6 +267,17 @@ function onRightChange () {
   }
 }
 
+function hideArticle() {
+  aside.classList.toggle('trasition')
+  aside.children[0].classList.toggle('displayNone')
+  aside.children[1].classList.toggle('displayNone')
+
+  if(arrowButton.innerHTML === '<i class="fas fa-chevron-right"></i>') {
+    arrowButton.innerHTML = '<i class="fas fa-chevron-left"></i>'
+  } else {
+    arrowButton.innerHTML = '<i class="fas fa-chevron-right"></i>'
+  }
+}
 
 window.onload = function () {
   // this code works to set the initial active button based on the timerSelected variable

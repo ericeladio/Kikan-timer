@@ -76,12 +76,16 @@ img {
 	text-align: center;
 	font-size: 2.1rem;
 }
-.content-container {
+.chronometer-container {
 	flex: 8;
 	display: flex;
-	flex-direction: column;
-	overflow: hidden;
 	height: calc(100vh - 80px);
+}
+
+.content-container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
 }
 
 .button-container {
@@ -177,6 +181,20 @@ img {
 		width: 100%;
 	}
 
+	.chronometer-container {
+		justify-content: center;	
+	}
+
+	.content-container {
+		max-width: 65%
+	}
+
+	#chronometer {
+		display: flex;
+    	align-items: center;
+    	justify-content: center;
+	}
+
   }
 
 @media (max-width: 1000px) {
@@ -190,7 +208,7 @@ img {
  	#infoKikan {
  		display: none;
  	}
- 	.content-container {
+ 	.chronometer-container {
  		flex: 1;
  		height: calc(100vh - 80px);
  	}
@@ -226,7 +244,7 @@ img {
 		justify-content: center;
 	}
 
-	.content-container {
+	.chronometer-container {
 		background-color: var(--primary-color);
 		color: var(--white);
 		background-image: url(../img/creado_bykondo.svg);
@@ -267,5 +285,10 @@ img {
 }
 
 .trasition {
-	transition: all 0.5s ease-out;
+	flex: 0 !important;
+	position: absolute !important;
+	height: calc(100vh - 80px) !important;
+}
+.displayNone{
+	display: none;
 }
