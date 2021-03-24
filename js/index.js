@@ -1,6 +1,6 @@
-var initialKikanTimer = '02:00'
-var initialShortBreakTimer = '00:30'
-var initialLongBreakTimer = '01:00'
+var initialKikanTimer = '00:15'
+var initialShortBreakTimer = '00:10'
+var initialLongBreakTimer = '00:11'
 var onKikan = false
 var onShortBreak = false
 var onLongBreak = false
@@ -10,7 +10,7 @@ var kikanCounter = 0
 var shortBreakKiKanCounter = 0
 var longBreakKikanCounter = 0
 var timerSelected = 'kikan' // kikan | longbrake | shortBrake 
-var widthScreen = document.documentElement.clientWidth
+var isMobile = false
 
 // ELEMENTS START
 const kikanButton = document.getElementById('kikanBtn')
@@ -21,16 +21,20 @@ const playPauseButton = document.getElementById('playPause')
 const resetButton = document.getElementById('reset')
 const aside = document.getElementById('infoKikan')
 const arrowButton = aside.children[2]
+const body = document.getElementsByTagName('body')
+const arrowMobile = document.getElementById('mobile')
 // ELEMENTS END
 
 // this function change the currentTimer of the kikan based on the timerSelected
 // and change the buttons color and restart the other ones
+console.log(window.getComputedStyle(arrowMobile).display)
 function onShortBreakChange () {
   currentTimer = initialShortBreakTimer
   chronometer.innerText = currentTimer
   if (timerSelected === 'kikan') {
     kikanButton.classList.remove('yellow')
     kikanButton.classList.add('blue')
+
   }
   if (timerSelected === 'longBreak') {
     longBreakButton.classList.remove('yellow')
@@ -40,6 +44,7 @@ function onShortBreakChange () {
   shortBreakButton.classList.remove('blue')
   shortBreakButton.classList.add('yellow')
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
+
 }
 function onLongBreakChange () {
   console.log(initialLongBreakTimer)
@@ -164,17 +169,29 @@ function startTimer (time, type) {
       if (onKikan) {
         kikanCounter = kikanCounter + 1
         if ((kikanCounter % 4) === 0) {
-           return onLongBreakChange()
+          if (window.getComputedStyle(arrowMobile).display === 'block') {
+            changeButton(kikanButton, longBreakButton, 'show-mobile-button')
+          }
+          return onLongBreakChange()
         } else {
+          if (window.getComputedStyle(arrowMobile).display === 'block') {
+            changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
+          }
           return onShortBreakChange()
         }
       }
       if (onShortBreak) {
         shortBreakKiKanCounter = shortBreakKiKanCounter + 1
+        if (window.getComputedStyle(arrowMobile).display === 'block') {
+          changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
+        }
         return onKikanChange()
       }
       if (onLongBreak) {
         longBreakKikanCounter = longBreakKikanCounter + 1
+        if (window.getComputedStyle(arrowMobile).display === 'block') {
+          changeButton(longBreakButton, kikanButton, 'show-mobile-button')
+        }
         return onKikanChange()
       }
     }
