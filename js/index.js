@@ -21,6 +21,7 @@ const playPauseButton = document.getElementById('playPause')
 const resetButton = document.getElementById('reset')
 const aside = document.getElementById('infoKikan')
 const arrowButton = aside.children[2]
+const body = document.getElementById('c-body')
 // ELEMENTS END
 
 // this function change the currentTimer of the kikan based on the timerSelected
@@ -85,7 +86,10 @@ function kikanAlert (callback) {
       return null
     }
   }
-  if (callback) callback()
+  if (callback) {
+    callback()
+    body.classList.remove('break-time')
+  }
   onKikanChange()
 }
 function shortBreakAlert (callback) {
@@ -97,7 +101,10 @@ function shortBreakAlert (callback) {
       return null
     }
   }
-  if (callback) callback()
+  if (callback) {
+    callback()
+    body.classList.add('break-time')
+  }
   onShortBreakChange()
 }
 function longBreakAlert (callback) {
@@ -109,7 +116,10 @@ function longBreakAlert (callback) {
       return null
     }
   }
-  if (callback) callback()
+  if (callback) {
+    callback()
+    body.classList.add('break-time')
+  }
   onLongBreakChange()
 }
 
