@@ -110,6 +110,49 @@ class Kikan {
       }
     }, 1000)
   }
+  kikanAlert (setStateAlert, callback) {
+    var comparisonStatus1 = null
+    var comparisonStatus2 = null
+    var setLogo = null
+    var setOnKikanChange = null
+    switch (setStateAlert) {
+      case 'kikan':
+        comparisonStatus1 = kikan.onShortBreak
+        comparisonStatus2 = kikan.onLongBreak
+        setLogo = './img/kikan-timer.svg'
+        setOnKikanChange = onKikanChange()
+        break
+      case 'shortBreak':
+        comparisonStatus1 = kikan.onKikan
+        comparisonStatus2 = kikan.onLongBreak
+        setLogo = './img/kikan_logo_blue.svg'
+        setOnKikanChange = onShortBreakChange()
+        break
+      case 'longBreak':
+        comparisonStatus1 = kikan.onKikan
+        comparisonStatus2 = kikan.onShortBreak
+        setLogo = './img/kikan_logo_blue.svg'
+        setOnKikanChange = onLongBreakChange()
+        break
+      default:
+        return null
+    }
+    if (comparisonStatus1 || comparisonStatus2) {
+      var message = 'El tiempo aun esta corriendO, estas seguro de querer interrumpirlo?'
+      var accept = window.confirm(message)
+      if (accept) {
+        onReset()
+      } else {
+        return null
+      }
+    }
+    if (callback) {
+      callback()
+      body.classList.remove('break-time')
+      logo.src = setLogo
+    }
+    setOnKikanChange()
+  }
 }
 // this function change the currentTimer of the kikan based on the timerSelected
 // and change the buttons color and restart the other ones
@@ -164,55 +207,6 @@ function onKikanChange () {
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 
-function kikanAlert (callback) {
-  if (kikan.onShortBreak || kikan.onLongBreak) {
-    var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
-    if (accept) {
-      onReset()
-    } else {
-      return null
-    }
-  }
-  if (callback) {
-    callback()
-    body.classList.remove('break-time')
-    logo.src = './img/kikan-timer.svg'
-  }
-  onKikanChange()
-}
-function shortBreakAlert (callback) {
-  if (kikan.onKikan || kikan.onLongBreak) {
-    var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
-    if (accept) {
-      onReset()
-    } else {
-      return null
-    }
-  }
-  if (callback) {
-    callback()
-    body.classList.add('break-time')
-    logo.src = './img/kikan_logo_blue.svg'
-  }
-  onShortBreakChange()
-}
-function longBreakAlert (callback) {
-  if (kikan.onKikan || kikan.onShortBreak) {
-    var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
-    if (accept) {
-      onReset()
-    } else {
-      return null
-    }
-  }
-  if (callback) {
-    callback()
-    body.classList.add('break-time')
-    logo.src = './img/kikan_logo_blue.svg'
-  }
-  onLongBreakChange()
-}
-
 function pauseTimer () {
   if (kikan.intervalTimer !== null) {
     clearInterval(kikan.intervalTimer)
@@ -264,37 +258,37 @@ function changeButton (removeElement, addElement, className) {
 
 function onLeftChange () {
   if (kikan.timerSelected === 'kikan') {
-    return longBreakAlert(function () {
+    return kikan.kikanAlert(function () {
       changeButton(kikanButton, longBreakButton, 'show-mobile-button')
-    })
+    }, 'longBreak')
   }
   if (kikan.timerSelected === 'shortBreak') {
-    return kikanAlert(function () {
+    return kikan.kikanAlert(function () {
       changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
-    })
+    }, 'kikan')
   }
   if (kikan.timerSelected === 'longBreak') {
-    return shortBreakAlert(function () {
+    return kikan.kikanAlert(function () {
       changeButton(longBreakButton, shortBreakButton, 'show-mobile-button')
-    })
+    }, 'shortBreak')
   }
 }
 
 function onRightChange () {
   if (kikan.timerSelected === 'kikan') {
-    return shortBreakAlert(function () {
+    return kikan.kikanAlert(function () {
       changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
-    })
+    }, 'shortBreak')
   }
   if (kikan.timerSelected === 'shortBreak') {
-    return longBreakAlert(function () {
+    return kikan.kikanAlert(function () {
       changeButton(shortBreakButton, longBreakButton, 'show-mobile-button')
-    })
+    }, 'longBreak')
   }
   if (kikan.timerSelected === 'longBreak') {
-    return kikanAlert(function () {
+    return kikan.kikanAlert(function () {
       changeButton(longBreakButton, kikanButton, 'show-mobile-button')
-    })
+    }, 'kikan')
   }
 }
 
