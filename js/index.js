@@ -10,7 +10,6 @@ const arrowButton = aside.children[2]
 const arrowMobile = document.getElementById('mobile')
 const body = document.getElementById('c-body')
 const logo = document.getElementById('logo-kikan')
-
 // ELEMENTS END
 class Kikan {
   constructor () {
@@ -29,7 +28,6 @@ class Kikan {
     this.startTimer = this.startTimer.bind(this)
   }
   startTimer (time, type) {
-    console.log(this.intervalTimer,'intervaltimer 0 ',this)
     if (type === 'kikan') {
       this.onKikan = true
       this.onShortBreak = false
@@ -73,23 +71,25 @@ class Kikan {
       this.currentTimer = displayMinutos + ':' + displaySegundos
       chronometer.innerText = this.currentTimer
       if (minutos === 0 && segundos === 0) {
-        console.log(this.intervalTimer, 'intervaltimer ', this)
         if (this.intervalTimer !== null) {
           clearInterval(this.intervalTimer)
           this.intervalTimer = null
         }
         if (this.onKikan) {
           this.kikanCounter = this.kikanCounter + 1
-          console.log(this.kikanCounter, 'counter ')
           if ((this.kikanCounter % 4) === 0) {
             if (window.getComputedStyle(arrowMobile).display === 'block') {
               changeButton(kikanButton, longBreakButton, 'show-mobile-button')
             }
+            body.classList.add('break-time')
+            logo.src = './img/kikan_logo_blue.svg'
             return onLongBreakChange()
           } else {
             if (window.getComputedStyle(arrowMobile).display === 'block') {
               changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
             }
+            body.classList.add('break-time')
+            logo.src = './img/kikan_logo_blue.svg'
             return onShortBreakChange()
           }
         }
@@ -98,6 +98,8 @@ class Kikan {
           if (window.getComputedStyle(arrowMobile).display === 'block') {
             changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
           }
+          body.classList.remove('break-time')
+          logo.src = './img/kikan-timer.svg'
           return onKikanChange()
         }
         if (this.onLongBreak) {
@@ -105,6 +107,8 @@ class Kikan {
           if (window.getComputedStyle(arrowMobile).display === 'block') {
             changeButton(longBreakButton, kikanButton, 'show-mobile-button')
           }
+          body.classList.remove('break-time')
+          logo.src = './img/kikan-timer.svg'
           return onKikanChange()
         }
       }
@@ -112,27 +116,19 @@ class Kikan {
   }
 
   kikanAlert (type, callback) {
-    var comparisonStatus1 = null
-    var comparisonStatus2 = null
-    var setLogo = null
     var setOnKikanChange = null
-    var isActive = kikan.onKikan || kikan.onLongBreak || kikan.onShortBreak
-    switch (type) {
-      case 'shortBreak':
-        setLogo = './img/kikan_logo_blue.svg'
-        setOnKikanChange = onShortBreakChange()
-        break
-      case 'longBreak':
-        setLogo = './img/kikan_logo_blue.svg'
-        setOnKikanChange = onLongBreakChange()
-        break
-      default:
-        setLogo = './img/kikan-timer.svg'
-        setOnKikanChange = onKikanChange()
-        break
+    var isActive = this.onKikan || this.onLongBreak || this.onShortBreak
+    var isNotKikan = type !== 'kikan'
+    var setLogo = isNotKikan ? './img/kikan_logo_blue.svg' : './img/kikan-timer.svg'
+    if (type === 'shortBreak') {
+      setOnKikanChange = onShortBreakChange()
+    } else if (type === 'longBreak') {
+      setOnKikanChange = onLongBreakChange()
+    } else {
+      setOnKikanChange = onKikanChange()
     }
     if (isActive) {
-      var message = 'El tiempo aun esta corriendO, estas seguro de querer interrumpirlo?'
+      var message = 'El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?'
       var accept = window.confirm(message)
       if (accept) {
         onReset()
@@ -142,10 +138,10 @@ class Kikan {
     }
     if (callback) {
       callback()
-      body.classList.remove('break-time')
+      isNotKikan ? body.classList.add('break-time') : body.classList.remove('break-time')
       logo.src = setLogo
     }
-    setOnKikanChange()
+    setOnKikanChange
   }
 }
 // this function change the currentTimer of the kikan based on the timerSelected
@@ -167,7 +163,6 @@ function onShortBreakChange () {
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 function onLongBreakChange () {
-  console.log(kikan.initialLongBreakTimer)
   kikan.currentTimer = kikan.initialLongBreakTimer
   chronometer.innerText = kikan.currentTimer
   if (kikan.timerSelected === 'kikan') {
@@ -252,37 +247,37 @@ function changeButton (removeElement, addElement, className) {
 
 function onLeftChange () {
   if (kikan.timerSelected === 'kikan') {
-    return kikan.kikanAlert(function () {
+    return kikan.kikanAlert('longBreak', function () {
       changeButton(kikanButton, longBreakButton, 'show-mobile-button')
-    }, 'longBreak')
+    })
   }
   if (kikan.timerSelected === 'shortBreak') {
-    return kikan.kikanAlert(function () {
+    return kikan.kikanAlert('kikan', function () {
       changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
-    }, 'kikan')
+    })
   }
   if (kikan.timerSelected === 'longBreak') {
-    return kikan.kikanAlert(function () {
+    return kikan.kikanAlert('shortBreak', function () {
       changeButton(longBreakButton, shortBreakButton, 'show-mobile-button')
-    }, 'shortBreak')
+    })
   }
 }
 
 function onRightChange () {
   if (kikan.timerSelected === 'kikan') {
-    return kikan.kikanAlert(function () {
+    return kikan.kikanAlert('shortBreak', function () {
       changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
-    }, 'shortBreak')
+    })
   }
   if (kikan.timerSelected === 'shortBreak') {
-    return kikan.kikanAlert(function () {
+    return kikan.kikanAlert('longBreak', function () {
       changeButton(shortBreakButton, longBreakButton, 'show-mobile-button')
-    }, 'longBreak')
+    },)
   }
   if (kikan.timerSelected === 'longBreak') {
-    return kikan.kikanAlert(function () {
+    return kikan.kikanAlert('kikan', function () {
       changeButton(longBreakButton, kikanButton, 'show-mobile-button')
-    }, 'kikan')
+    })
   }
 }
 
