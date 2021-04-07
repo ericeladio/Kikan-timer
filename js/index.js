@@ -25,7 +25,7 @@ class Kikan {
     this.kikanCounter = 0
     this.shortBreakKiKanCounter = 0
     this.longBreakKikanCounter = 0
-    this.timerSelected = 'kikan' // kikan | longbrake | shortBrake 
+    this.timerSelected = 'kikan' // kikan | longbrake | shortBrake
     this.startTimer = this.startTimer.bind(this)
   }
   startTimer (time, type) {
@@ -110,34 +110,28 @@ class Kikan {
       }
     }, 1000)
   }
-  kikanAlert (setStateAlert, callback) {
+
+  kikanAlert (type, callback) {
     var comparisonStatus1 = null
     var comparisonStatus2 = null
     var setLogo = null
     var setOnKikanChange = null
-    switch (setStateAlert) {
-      case 'kikan':
-        comparisonStatus1 = kikan.onShortBreak
-        comparisonStatus2 = kikan.onLongBreak
-        setLogo = './img/kikan-timer.svg'
-        setOnKikanChange = onKikanChange()
-        break
+    var isActive = kikan.onKikan || kikan.onLongBreak || kikan.onShortBreak
+    switch (type) {
       case 'shortBreak':
-        comparisonStatus1 = kikan.onKikan
-        comparisonStatus2 = kikan.onLongBreak
         setLogo = './img/kikan_logo_blue.svg'
         setOnKikanChange = onShortBreakChange()
         break
       case 'longBreak':
-        comparisonStatus1 = kikan.onKikan
-        comparisonStatus2 = kikan.onShortBreak
         setLogo = './img/kikan_logo_blue.svg'
         setOnKikanChange = onLongBreakChange()
         break
       default:
-        return null
+        setLogo = './img/kikan-timer.svg'
+        setOnKikanChange = onKikanChange()
+        break
     }
-    if (comparisonStatus1 || comparisonStatus2) {
+    if (isActive) {
       var message = 'El tiempo aun esta corriendO, estas seguro de querer interrumpirlo?'
       var accept = window.confirm(message)
       if (accept) {
