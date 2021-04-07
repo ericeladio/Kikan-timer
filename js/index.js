@@ -1,17 +1,3 @@
-var initialKikanTimer = '00:15'
-var initialShortBreakTimer = '00:10'
-var initialLongBreakTimer = '00:11'
-var onKikan = false
-var onShortBreak = false
-var onLongBreak = false
-var currentTimer = initialKikanTimer
-var intervalTimer = null
-var kikanCounter = 0
-var shortBreakKiKanCounter = 0
-var longBreakKikanCounter = 0
-var timerSelected = 'kikan' // kikan | longbrake | shortBrake 
-var isMobile = false
-
 // ELEMENTS START
 const kikanButton = document.getElementById('kikanBtn')
 const shortBreakButton = document.getElementById('shortBreakBtn')
@@ -26,66 +12,161 @@ const body = document.getElementById('c-body')
 const logo = document.getElementById('logo-kikan')
 
 // ELEMENTS END
-
+class Kikan {
+  constructor () {
+    this.initialKikanTimer = '00:15'
+    this.initialShortBreakTimer = '00:05'
+    this.initialLongBreakTimer = '00:10'
+    this.onKikan = false
+    this.onShortBreak = false
+    this.onLongBreak = false
+    this.currentTimer = this.initialKikanTimer
+    this.intervalTimer = null
+    this.kikanCounter = 0
+    this.shortBreakKiKanCounter = 0
+    this.longBreakKikanCounter = 0
+    this.timerSelected = 'kikan' // kikan | longbrake | shortBrake 
+    this.startTimer = this.startTimer.bind(this)
+  }
+  startTimer (time, type) {
+    console.log(this.intervalTimer,'intervaltimer 0 ',this)
+    if (type === 'kikan') {
+      this.onKikan = true
+      this.onShortBreak = false
+      this.onLongBreak = false
+    }
+    if (type === 'shortBreak') {
+      this.onShortBreak = true
+      this.onKikan = false
+      this.onLongBreak = false
+    }
+    if (type === 'longBreak') {
+      this.onLongBreak = true
+      this.onKikan = false
+      this.onShortBreak = false
+    }
+    const minutosSegundos = time.split(':') // hacer un objeto que regrese minutos y horas ( @cyberpolin )
+    var minutos = parseInt(minutosSegundos[0])
+    var displayMinutos = null
+    var segundos = parseInt(minutosSegundos[1])
+    var displaySegundos = null
+    this.intervalTimer = setInterval(() => {
+      if (segundos === 0) {
+        segundos = 60
+      }
+      if (segundos > 0) {
+        segundos = segundos - 1
+      }
+      if (minutos > 0 && segundos === 59) {
+        minutos = minutos - 1
+      }
+      if (minutos < 10) {
+        displayMinutos = '0' + minutos
+      } else {
+        displayMinutos = minutos
+      }
+      if (segundos < 10) {
+        displaySegundos = '0' + segundos
+      } else {
+        displaySegundos = segundos
+      }
+      this.currentTimer = displayMinutos + ':' + displaySegundos
+      chronometer.innerText = this.currentTimer
+      if (minutos === 0 && segundos === 0) {
+        console.log(this.intervalTimer, 'intervaltimer ', this)
+        if (this.intervalTimer !== null) {
+          clearInterval(this.intervalTimer)
+          this.intervalTimer = null
+        }
+        if (this.onKikan) {
+          this.kikanCounter = this.kikanCounter + 1
+          console.log(this.kikanCounter, 'counter ')
+          if ((this.kikanCounter % 4) === 0) {
+            if (window.getComputedStyle(arrowMobile).display === 'block') {
+              changeButton(kikanButton, longBreakButton, 'show-mobile-button')
+            }
+            return onLongBreakChange()
+          } else {
+            if (window.getComputedStyle(arrowMobile).display === 'block') {
+              changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
+            }
+            return onShortBreakChange()
+          }
+        }
+        if (this.onShortBreak) {
+          this.shortBreakKiKanCounter = this.shortBreakKiKanCounter + 1
+          if (window.getComputedStyle(arrowMobile).display === 'block') {
+            changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
+          }
+          return onKikanChange()
+        }
+        if (this.onLongBreak) {
+          this.longBreakKikanCounter = this.longBreakKikanCounter + 1
+          if (window.getComputedStyle(arrowMobile).display === 'block') {
+            changeButton(longBreakButton, kikanButton, 'show-mobile-button')
+          }
+          return onKikanChange()
+        }
+      }
+    }, 1000)
+  }
+}
 // this function change the currentTimer of the kikan based on the timerSelected
 // and change the buttons color and restart the other ones
-console.log(window.getComputedStyle(arrowMobile).display)
 function onShortBreakChange () {
-  currentTimer = initialShortBreakTimer
-  chronometer.innerText = currentTimer
-  if (timerSelected === 'kikan') {
+  kikan.currentTimer = kikan.initialShortBreakTimer
+  chronometer.innerText = kikan.currentTimer
+  if (kikan.timerSelected === 'kikan') {
     kikanButton.classList.remove('yellow')
     kikanButton.classList.add('blue')
-
   }
-  if (timerSelected === 'longBreak') {
+  if (kikan.timerSelected === 'longBreak') {
     longBreakButton.classList.remove('yellow')
     longBreakButton.classList.add('blue')
   }
-  timerSelected = 'shortBreak'
+  kikan.timerSelected = 'shortBreak'
   shortBreakButton.classList.remove('blue')
   shortBreakButton.classList.add('yellow')
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
-
 }
 function onLongBreakChange () {
-  console.log(initialLongBreakTimer)
-  currentTimer = initialLongBreakTimer
-  chronometer.innerText = currentTimer
-  if (timerSelected === 'kikan') {
+  console.log(kikan.initialLongBreakTimer)
+  kikan.currentTimer = kikan.initialLongBreakTimer
+  chronometer.innerText = kikan.currentTimer
+  if (kikan.timerSelected === 'kikan') {
     kikanButton.classList.remove('yellow')
     kikanButton.classList.add('blue')
   }
-  if (timerSelected === 'shortBreak') {
+  if (kikan.timerSelected === 'shortBreak') {
     shortBreakButton.classList.remove('yellow')
     shortBreakButton.classList.add('blue')
   }
-  timerSelected = 'longBreak'
+  kikan.timerSelected = 'longBreak'
   longBreakButton.classList.remove('blue')
   longBreakButton.classList.add('yellow')
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 
-function onKikanChange() {
-  currentTimer = initialKikanTimer
-  chronometer.innerText = currentTimer
-  if (timerSelected === 'shortBreak') {
+function onKikanChange () {
+  kikan.currentTimer = kikan.initialKikanTimer
+  chronometer.innerText = kikan.currentTimer
+  if (kikan.timerSelected === 'shortBreak') {
     shortBreakButton.classList.remove('yellow')
     shortBreakButton.classList.add('blue')
   }
-  if (timerSelected === 'longBreak') {
+  if (kikan.timerSelected === 'longBreak') {
     longBreakButton.classList.remove('yellow')
     longBreakButton.classList.add('blue')
   }
-  timerSelected = 'kikan'
+  kikan.timerSelected = 'kikan'
   kikanButton.classList.remove('blue')
   kikanButton.classList.add('yellow')
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
 }
 
 function kikanAlert (callback) {
-  if (onShortBreak || onLongBreak) {
-    var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
+  if (kikan.onShortBreak || kikan.onLongBreak) {
+    var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
     if (accept) {
       onReset()
     } else {
@@ -100,11 +181,11 @@ function kikanAlert (callback) {
   onKikanChange()
 }
 function shortBreakAlert (callback) {
-    if (onKikan|| onLongBreak) {
-    var accept = confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
+  if (kikan.onKikan || kikan.onLongBreak) {
+    var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
     if (accept) {
       onReset()
-    }else {
+    } else {
       return null
     }
   }
@@ -116,7 +197,7 @@ function shortBreakAlert (callback) {
   onShortBreakChange()
 }
 function longBreakAlert (callback) {
-  if (onKikan || onShortBreak) {
+  if (kikan.onKikan || kikan.onShortBreak) {
     var accept = window.confirm('El tiempo aun esta corriendo, estas seguro de querer interrumpirlo?')
     if (accept) {
       onReset()
@@ -132,123 +213,43 @@ function longBreakAlert (callback) {
   onLongBreakChange()
 }
 
-function startTimer (time, type) {
-  if (type === 'kikan') {
-    onKikan = true
-    onShortBreak = false
-    onLongBreak = false
-  }
-  if (type === 'shortBreak') {
-    onShortBreak = true
-    onKikan = false
-    onLongBreak = false
-  }
-  if (type === 'longBreak') {
-    onLongBreak = true
-    onKikan = false
-    onShortBreak = false
-  }
-  const minutosSegundos = time.split(':')  // hacer un objeto que regrese minutos y horas ( @cyberpolin )
-  var minutos = parseInt(minutosSegundos[0])
-  var displayMinutos = null
-  var segundos = parseInt(minutosSegundos[1])
-  var displaySegundos = null
-  intervalTimer = setInterval(function () {
-    if (segundos === 0) {
-      segundos = 60
-    }
-    if (segundos > 0) {
-      segundos = segundos - 1
-    }
-    if (minutos > 0 && segundos === 59) {
-      minutos = minutos - 1
-    }
-    if (minutos < 10) {
-      displayMinutos = '0' + minutos
-    } else {
-      displayMinutos = minutos
-    }
-    if (segundos < 10) {
-      displaySegundos = '0' + segundos
-    } else {
-      displaySegundos = segundos
-    }
-    currentTimer = displayMinutos + ':' + displaySegundos
-    chronometer.innerText = currentTimer
-    if (minutos === 0 && segundos === 0) {
-      if (intervalTimer !== null) {
-        clearInterval(intervalTimer)
-        intervalTimer = null
-      }
-      if (onKikan) {
-        kikanCounter = kikanCounter + 1
-        if ((kikanCounter % 4) === 0) {
-          if (window.getComputedStyle(arrowMobile).display === 'block') {
-            changeButton(kikanButton, longBreakButton, 'show-mobile-button')
-          }
-          return onLongBreakChange()
-        } else {
-          if (window.getComputedStyle(arrowMobile).display === 'block') {
-            changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
-          }
-          return onShortBreakChange()
-        }
-      }
-      if (onShortBreak) {
-        shortBreakKiKanCounter = shortBreakKiKanCounter + 1
-        if (window.getComputedStyle(arrowMobile).display === 'block') {
-          changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
-        }
-        return onKikanChange()
-      }
-      if (onLongBreak) {
-        longBreakKikanCounter = longBreakKikanCounter + 1
-        if (window.getComputedStyle(arrowMobile).display === 'block') {
-          changeButton(longBreakButton, kikanButton, 'show-mobile-button')
-        }
-        return onKikanChange()
-      }
-    }
-  }, 1000)
-}
-
 function pauseTimer () {
-  if (intervalTimer !== null) {
-    clearInterval(intervalTimer)
+  if (kikan.intervalTimer !== null) {
+    clearInterval(kikan.intervalTimer)
   }
-  if (onKikan) {
-    onKikan = false
+  if (kikan.onKikan) {
+    kikan.onKikan = false
   }
-  if (onShortBreak) {
-    onShortBreak = false
+  if (kikan.onShortBreak) {
+    kikan.onShortBreak = false
   }
-  if (onLongBreak) {
-    onLongBreak = false
+  if (kikan.onLongBreak) {
+    kikan.onLongBreak = false
   }
 }
 
 function onReset () {
-  if (timerSelected === 'kikan') {
+  if (kikan.timerSelected === 'kikan') {
     onKikanChange()
   }
-  if (timerSelected === 'shortBreak') {
+  if (kikan.timerSelected === 'shortBreak') {
     onShortBreakChange()
   }
-  if (timerSelected === 'longBreak') {
+  if (kikan.timerSelected === 'longBreak') {
     onLongBreakChange()
   }
   pauseTimer()
   playPauseButton.innerHTML = "<i class='fas fa-play'></i>"
-  intervalTimer = null
+  kikan.intervalTimer = null
 }
 
 playPauseButton.addEventListener('click', function () {
-  if (onKikan || onShortBreak || onLongBreak) {
+  if (kikan.onKikan || kikan.onShortBreak || kikan.onLongBreak) {
     pauseTimer()
-    this.innerHTML = "<i class='fas fa-play'></i>" 
+    this.innerHTML = "<i class='fas fa-play'></i>"
   } else {
-    startTimer(currentTimer, timerSelected)
-    this.innerHTML = "<i class='fas fa-pause'></i>" 
+    kikan.startTimer(kikan.currentTimer, kikan.timerSelected)
+    this.innerHTML = "<i class='fas fa-pause'></i>"
   }
 })
 
@@ -261,19 +262,18 @@ function changeButton (removeElement, addElement, className) {
   addElement.classList.add(className)
 }
 
-
 function onLeftChange () {
-  if (timerSelected === 'kikan') {
+  if (kikan.timerSelected === 'kikan') {
     return longBreakAlert(function () {
       changeButton(kikanButton, longBreakButton, 'show-mobile-button')
     })
   }
-  if (timerSelected === 'shortBreak') {
+  if (kikan.timerSelected === 'shortBreak') {
     return kikanAlert(function () {
       changeButton(shortBreakButton, kikanButton, 'show-mobile-button')
     })
   }
-  if (timerSelected === 'longBreak') {
+  if (kikan.timerSelected === 'longBreak') {
     return shortBreakAlert(function () {
       changeButton(longBreakButton, shortBreakButton, 'show-mobile-button')
     })
@@ -281,29 +281,28 @@ function onLeftChange () {
 }
 
 function onRightChange () {
-  if (timerSelected === 'kikan') {
+  if (kikan.timerSelected === 'kikan') {
     return shortBreakAlert(function () {
       changeButton(kikanButton, shortBreakButton, 'show-mobile-button')
     })
   }
-  if (timerSelected === 'shortBreak') {
+  if (kikan.timerSelected === 'shortBreak') {
     return longBreakAlert(function () {
       changeButton(shortBreakButton, longBreakButton, 'show-mobile-button')
     })
   }
-  if (timerSelected === 'longBreak') {
+  if (kikan.timerSelected === 'longBreak') {
     return kikanAlert(function () {
       changeButton(longBreakButton, kikanButton, 'show-mobile-button')
     })
   }
 }
 
-function hideArticle() {
+function hideArticle () {
   aside.classList.toggle('trasition')
   aside.children[0].classList.toggle('displayNone')
   aside.children[1].classList.toggle('displayNone')
-
-  if(arrowButton.innerHTML === '<i class="fas fa-chevron-right"></i>') {
+  if (arrowButton.innerHTML === '<i class="fas fa-chevron-right"></i>') {
     arrowButton.innerHTML = '<i class="fas fa-chevron-left"></i>'
   } else {
     arrowButton.innerHTML = '<i class="fas fa-chevron-right"></i>'
@@ -312,12 +311,14 @@ function hideArticle() {
 
 window.onload = function () {
   // this code works to set the initial active button based on the timerSelected variable
-  if (timerSelected === 'kikan') {
+  if (kikan.timerSelected === 'kikan') {
     if (kikanButton.classList.contains('yellow') === false) {
       kikanButton.classList.add('yellow')
       kikanButton.classList.remove('blue')
     }
     // this code add the currentTimer on the chronometer element when is kikan
-    chronometer.innerText = currentTimer
+    chronometer.innerText = kikan.currentTimer
   }
 }
+
+const kikan = new Kikan()
